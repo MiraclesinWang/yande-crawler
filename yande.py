@@ -13,6 +13,8 @@ headers = {
 
 # https://yande.re/post?page=2&tags=izumi_sagiri
 
+pic_finished = 0
+
 def url_traverse(tag, page_num):
     url_lst = ['https://yande.re/post?tags='+tag]
 
@@ -63,7 +65,7 @@ def Get_img_urls(url_lst):
 
         sub_img_urls = [url[3:-3] for url in sub_img_urls]
 
-        print("get {:d} img urls, {:d} still left".format(len(sub_img_urls), len(url_lst)))
+        print("get {:d} img urls, {:d} pages left".format(len(sub_img_urls), len(url_lst)))
 
         img_urls += sub_img_urls
 
@@ -76,7 +78,10 @@ def one_image_download(output_path, img_url):
             fp.write((urllib.request.urlopen(img_url)).read())
             fp.close()
 
-            # print("download success, {:d} images left, file: {:s}, url: {:s}".format(len(img_urls), file_name, img_url))
+            global pic_finished
+            pic_finished = pic_finished + 1
+
+            print("download success, {:d} images downloaded, url: {:s}".format(pic_finished, img_url))
             break
         except:
             pass
@@ -92,6 +97,10 @@ def Multi_process_download(img_urls, output_dir, prefix='', start_dex=0):
         file_name = prefix + str(start_dex+i).zfill(6) + affix
         sub_threads.append(threading.Thread(target=one_image_download, args=(os.path.join(output_dir, file_name), img_url)))
         sub_threads[-1].start()
+
+    for i in sub_threads:
+        i.join()
+    print('download finished')
 
 def download_imgs(img_urls, output_dir, prefix='', start_dex=0):
     if not os.path.exists(output_dir):
@@ -123,8 +132,10 @@ def download_imgs(img_urls, output_dir, prefix='', start_dex=0):
 def Pic_crawler(tag, page_num=0, output_dir='.', prefix='', start_dex=0):
     url_lst = url_traverse(tag, page_num)
     img_urls = Get_img_urls(url_lst)
+    pic_finished = 0
     Multi_process_download(img_urls, output_dir, prefix, start_dex)
     # download_imgs(img_urls, output_dir, prefix, start_dex)
 
 if __name__ == '__main__':
-    Pic_crawler('izumi_sagiri', 16, r'D:\file\Pictures\纱雾酱\yande', 'yande')
+    # Pic_crawler('izumi_sagiri', 16, r'D:\file\Pictures\纱雾酱\yande', 'yande')
+    Pic_crawler('unicorn_%28azur_lane%29', 26, r'D:\file\Pictures\独角兽\yande', 'yande')
