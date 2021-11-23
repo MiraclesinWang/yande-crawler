@@ -1,5 +1,6 @@
 import urllib.request
 import urllib.parse
+import requests
 import re
 import os
 import threading
@@ -72,19 +73,26 @@ def Get_img_urls(url_lst):
     return img_urls
 
 def one_image_download(output_path, img_url):
+    fail_cnt = 0
     while True:
         try:
             fp = open(output_path, 'wb')
             fp.write((urllib.request.urlopen(img_url)).read())
+            # fp.write(requests.get(img_url, timeout=120, headers=headers).content)
             fp.close()
 
             global pic_finished
             pic_finished = pic_finished + 1
 
-            print("download success, {:d} images downloaded, url: {:s}".format(pic_finished, img_url))
+            print("download success, {:d} images downloaded, url: {:s}, path: {:s}".format(pic_finished, img_url, output_path))
             break
-        except:
-            pass
+        except Exception as E:
+            try:
+                if int(E.code) == 429:
+                    fail_cnt = fail_cnt + 1
+                    time.sleep(min(10*fail_cnt, 60))
+            except:
+                print("download failed", E, "url:", img_url)
 
 def Multi_process_download(img_urls, output_dir, prefix='', start_dex=0):
     if not os.path.exists(output_dir):
@@ -118,7 +126,8 @@ def download_imgs(img_urls, output_dir, prefix='', start_dex=0):
 
         try:
             fp = open(os.path.join(output_dir, file_name), 'wb')
-            fp.write((urllib.request.urlopen(img_url)).read())
+            # fp.write((urllib.request.urlopen(img_url)).read())
+            fp.write(requests.get(img_url, timeout=10, headers=headers).content)
             fp.close()
             start_dex += 1
 
@@ -132,10 +141,21 @@ def download_imgs(img_urls, output_dir, prefix='', start_dex=0):
 def Pic_crawler(tag, page_num=0, output_dir='.', prefix='', start_dex=0):
     url_lst = url_traverse(tag, page_num)
     img_urls = Get_img_urls(url_lst)
+    global pic_finished
     pic_finished = 0
     Multi_process_download(img_urls, output_dir, prefix, start_dex)
     # download_imgs(img_urls, output_dir, prefix, start_dex)
 
 if __name__ == '__main__':
     # Pic_crawler('izumi_sagiri', 16, r'D:\file\Pictures\纱雾酱\yande', 'yande')
-    Pic_crawler('unicorn_%28azur_lane%29', 26, r'D:\file\Pictures\独角兽\yande', 'yande')
+    # Pic_crawler('unicorn_%28azur_lane%29', 26, r'D:\file\Pictures\独角兽\yande', 'yande')
+    # Pic_crawler('kafuu_chino', 47, r'D:\file\Pictures\智乃敲可耐\yande', 'yande')
+    # Pic_crawler('emilia_%28re_zero%29', 24, r'D:\file\Pictures\艾米莉亚\yande', 'yande')
+    # Pic_crawler('siesta_%28tantei_wa_mou_shindeiru%29', 3, r'D:\file\Pictures\谢丝塔\yande', 'yande')
+    Pic_crawler('elaina_%28majo_no_tabitabi%29', 11, r'D:\file\Pictures\伊蕾娜\yande', 'yande')
+    # Pic_crawler('rem_%28re_zero%29', 61, r'D:\file\Pictures\蕾姆\yande', 'yande')
+    # Pic_crawler('kochiya_sanae', 42, r'D:\file\Pictures\东风谷早苗\yande', 'yande')
+    # Pic_crawler('manjuu_%28azur_lane%29', 31, r'D:\file\Pictures\恶毒\yande', 'yande')
+    # Pic_crawler('minato_aqua', 36, r'D:\file\Pictures\凑阿库娅\yande', 'yande')
+    # Pic_crawler('illyasviel_von_einzbern', 35, r'D:\file\Pictures\伊莉雅\yande', 'yande')
+
