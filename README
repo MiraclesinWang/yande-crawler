@@ -11,6 +11,5 @@ Development log:
  - 2021/11/25
     * use API instead of parsing HTML
     * add tqdm to indicate download progress
- - 2021/11/26
     * add multiprocessing
     * TODO: the disorder of progress bars unsolved
