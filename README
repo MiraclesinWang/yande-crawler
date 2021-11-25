@@ -1,0 +1,13 @@
+This is a development version of `yande-crawler` project.
+
+Usage:
+1. make sure that you have all require modules installed.
+2. make sure that you can access https://yande.re in your terminal.
+2. in main.py, set which tags and how many pages you want to download.
+3. run `python main.py` and wait.
+4. images downloaded will be found in ./download.
+
+Development log:
+ - 2021/11/25
+    * use API instead of parsing HTML
+    * add tqdm to indicate download progress
