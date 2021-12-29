@@ -5,9 +5,15 @@ Usage:
 2. make sure that you can access https://yande.re in your terminal.
 2. in main.py, set which tags and how many pages you want to download.
 3. run `python main.py` and wait.
-4. images downloaded will be found in ./download.
+4. images downloaded will be found in . or the path you set(recommended)
 
 Development log:
  - 2021/11/25
     * use API instead of parsing HTML
     * add tqdm to indicate download progress
+ - 2021/12/29
+    * add multi-processing to accelerate the downloading
+    * automatically allocate filename by index, this can organize the files orderly
+    * automatically judge how many pictures need to be downloaded, you can also fix the number on your own, but make sure not exceeding the max available number
+    * add retrying mechanism, if some images' downloadings fail (quite normal since server and web or vpn are not stable), the code can retry them afterwards. 
+   
