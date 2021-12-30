@@ -7,6 +7,10 @@ Usage:
 3. run `python main.py` and wait.
 4. images downloaded will be found in . or the path you set(recommended)
 
+### Example
+```main(tags=['loli', 'naked'], download_directory=r'D:\file\Pictures\yande', score_threshold=60)```
+Obviously, this is not quite convenient currently. Afterwards, I will develop a GUI for it.
+
 Development log:
  - 2021/11/25
     * use API instead of parsing HTML
@@ -16,4 +20,8 @@ Development log:
     * automatically allocate filename by index, this can organize the files orderly
     * automatically judge how many pictures need to be downloaded, you can also fix the number on your own, but make sure not exceeding the max available number
     * add retrying mechanism, if some images' downloadings fail (quite normal since server and web or vpn are not stable), the code can retry them afterwards. 
+ - 2021/12/30
+    * add image filtering according to the score given by the website. (I do not know how this score is calcucated actually)
+    * fix some tiny bugs
+    * to avoid dead cycle, add retrying times limit.
    
