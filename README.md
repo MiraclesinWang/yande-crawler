@@ -8,7 +8,9 @@ Usage:
 4. images downloaded will be found in . or the path you set(recommended)
 
 ### Example
-```main(tags=['loli', 'naked'], download_directory=r'D:\file\Pictures\yande', score_threshold=60)```
+```py
+main(tags=['loli', 'naked'], download_directory=r'D:\file\Pictures\yande', score_threshold=60)
+```
 Obviously, this is not quite convenient currently. Afterwards, I will develop a GUI for it.
 
 Development log:
