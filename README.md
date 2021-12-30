@@ -1,6 +1,6 @@
 This is a development version of `yande-crawler` project.
 
-Usage:
+## Usage:
 1. make sure that you have all require modules installed.
 2. make sure that you can access https://yande.re in your terminal.
 2. in main.py, set which tags and how many pages you want to download.
@@ -13,7 +13,7 @@ main(tags=['loli', 'naked'], download_directory=r'D:\file\Pictures\yande', score
 ```
 Obviously, this is not quite convenient currently. Afterwards, I will develop a GUI for it.
 
-Development log:
+## Development log:
  - 2021/11/25
     * use API instead of parsing HTML
     * add tqdm to indicate download progress
