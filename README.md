@@ -23,7 +23,7 @@ Obviously, this is not quite convenient currently. Afterwards, I will develop a 
     * automatically judge how many pictures need to be downloaded, you can also fix the number on your own, but make sure not exceeding the max available number
     * add retrying mechanism, if some images' downloadings fail (quite normal since server and web or vpn are not stable), the code can retry them afterwards. 
  - 2021/12/30
-    * add image filtering according to the score given by the website. (I do not know how this score is calcucated actually)
+    * add image filtering according to the score given by the website. (according to the website, score is computed by thumbs-ups - thumbs-downs. Some tags tend to have high scores while others' are quite low, it is advised to try different scores for a tag to find the one you want)
     * fix some tiny bugs
     * to avoid dead cycle, add retrying times limit.
    
